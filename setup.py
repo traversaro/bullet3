@@ -28,7 +28,7 @@ def parallelCCompile(self,
       output_dir, macros, include_dirs, sources, depends, extra_postargs)
   cc_args = self._get_cc_args(pp_opts, debug, extra_preargs)
   # parallel code
-  N = 2 * multiprocessing.cpu_count()  # number of parallel compilations
+  N = 1
   try:
     # On Unix-like platforms attempt to obtain the total memory in the
     # machine and limit the number of parallel jobs to the number of Gbs
