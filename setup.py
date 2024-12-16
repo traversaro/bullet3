@@ -89,7 +89,7 @@ libraries = []
 include_dirs = []
 
 # Devendor some libraries
-libraries += ['minizip', 'zlib']
+libraries += ['minizip', 'z']
 
 try:
   import numpy
