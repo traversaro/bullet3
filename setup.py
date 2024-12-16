@@ -88,6 +88,9 @@ EGL_CXX_FLAGS = ''
 libraries = []
 include_dirs = []
 
+# Devendor some libraries
+libraries += ['minizip', 'zlib']
+
 try:
   import numpy
   NP_DIRS = [numpy.get_include()]
@@ -157,24 +160,6 @@ sources = ["examples/pybullet/pybullet.c"]\
 +["examples/ThirdPartyLibs/Wavefront/tiny_obj_loader.cpp"]\
 +["examples/ThirdPartyLibs/stb_image/stb_image.cpp"]\
 +["examples/ThirdPartyLibs/stb_image/stb_image_write.cpp"]\
-+["examples/ThirdPartyLibs/minizip/ioapi.c"]\
-+["examples/ThirdPartyLibs/minizip/unzip.c"]\
-+["examples/ThirdPartyLibs/minizip/zip.c"]\
-+["examples/ThirdPartyLibs/zlib/adler32.c"]\
-+["examples/ThirdPartyLibs/zlib/compress.c"]\
-+["examples/ThirdPartyLibs/zlib/crc32.c"]\
-+["examples/ThirdPartyLibs/zlib/deflate.c"]\
-+["examples/ThirdPartyLibs/zlib/gzclose.c"]\
-+["examples/ThirdPartyLibs/zlib/gzlib.c"]\
-+["examples/ThirdPartyLibs/zlib/gzread.c"]\
-+["examples/ThirdPartyLibs/zlib/gzwrite.c"]\
-+["examples/ThirdPartyLibs/zlib/infback.c"]\
-+["examples/ThirdPartyLibs/zlib/inffast.c"]\
-+["examples/ThirdPartyLibs/zlib/inflate.c"]\
-+["examples/ThirdPartyLibs/zlib/inftrees.c"]\
-+["examples/ThirdPartyLibs/zlib/trees.c"]\
-+["examples/ThirdPartyLibs/zlib/uncompr.c"]\
-+["examples/ThirdPartyLibs/zlib/zutil.c"]\
 +["examples/Importers/ImportColladaDemo/LoadMeshFromCollada.cpp"]\
 +["examples/Importers/ImportObjDemo/LoadMeshFromObj.cpp"]\
 +["examples/Importers/ImportObjDemo/Wavefront2GLInstanceGraphicsShape.cpp"]\
@@ -392,7 +377,7 @@ if 'BT_USE_EGL' in CXX_FLAGS:
   sources += ['examples/OpenGLWindow/EGLOpenGLWindow.cpp']
 
 if _platform == "linux" or _platform == "linux2":
-  libraries = ['dl', 'pthread']
+  libraries = ['dl', 'pthread'] + libraries
   CXX_FLAGS += '-D_LINUX '
   CXX_FLAGS += '-DGLEW_STATIC '
   CXX_FLAGS += '-DGLEW_INIT_OPENGL11_FUNCTIONS=1 '
@@ -422,7 +407,7 @@ if _platform == "linux" or _platform == "linux2":
 
 elif _platform == "win32":
   print("win32!")
-  libraries = ['Ws2_32', 'Winmm', 'User32', 'Opengl32', 'kernel32', 'glu32', 'Gdi32', 'Comdlg32']
+  libraries = ['Ws2_32', 'Winmm', 'User32', 'Opengl32', 'kernel32', 'glu32', 'Gdi32', 'Comdlg32'] + libraries
   CXX_FLAGS += '-DWIN32 '
   CXX_FLAGS += '-DGLEW_STATIC '
   sources = sources + ["examples/ThirdPartyLibs/enet/win32.c"]\
@@ -442,7 +427,7 @@ elif _platform == "darwin":
   +["examples/OpenGLWindow/MacOpenGLWindowObjC.m"]
 else:
   print("bsd!")
-  libraries = ['GL', 'GLEW', 'pthread']
+  libraries = ['GL', 'GLEW', 'pthread'] + libraries
   os.environ['LDFLAGS'] = '-L/usr/X11R6/lib'
   CXX_FLAGS += '-D_BSD '
   CXX_FLAGS += '-I/usr/X11R6/include '
